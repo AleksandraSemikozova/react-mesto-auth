@@ -1,7 +1,7 @@
 import React from 'react';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import registrationWrong from '../images/Union-not.svg';
+import registrationError from '../images/Union-not.svg';
 import registrationOk from '../images/Union-yes.svg';
 import Header from './Header';
 import Footer from './Footer';
@@ -177,8 +177,8 @@ function App() {
         }
         if (res.status === 400) {
           handleInfoTooltipContent({
-            iconPath: registrationWrong,
-            text: 'Введенный email уже зарегистрирован!',
+            iconPath: registrationError,
+            text: 'Некорректно заполнено одно из полей',
           });
           handleInfoTooltipOpen();
           setTimeout(closeAllPopups, 2500);
@@ -186,7 +186,7 @@ function App() {
       })
       .catch((err) => {
         handleInfoTooltipContent({
-          iconPath: registrationWrong,
+          iconPath: registrationError,
           text: 'Что-то пошло не так! Попробуйте еще раз!',
         });
         handleInfoTooltipOpen();
@@ -200,7 +200,7 @@ function App() {
       .authorize({email, password})
       .then((data) => {
         if (!data) {
-          throw new Error('Некорректно заполнено одно из полей');
+          throw new Error('Ошибка');
         }
         setLoggedIn(true);
         handleInfoTooltipContent({
@@ -213,8 +213,8 @@ function App() {
       })
       .catch((err) => {
         handleInfoTooltipContent({
-          iconPath: registrationWrong,
-          text: 'Что-то пошло не так! Попробуйте еще раз!',
+          iconPath: registrationError,
+          text: 'Не передано одно из полей',
         });
         handleInfoTooltipOpen();
         setTimeout(closeAllPopups, 2500);
