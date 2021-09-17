@@ -1,7 +1,9 @@
 .page__container {
+  min-height: 100vh;
+
   box-sizing: border-box;
   font-family: 'Inter', Arial, sans-serif;
-  font-style:  normal;
+  font-style: normal;
   color: #fff;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -9,4 +11,8 @@
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }

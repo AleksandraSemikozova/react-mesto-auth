@@ -1,22 +1,22 @@
-import React from "react";
-import api from "../utils/api";
-import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
-import registrationWrong from "../images/Union-not.svg";
-import registrationOk from "../images/Union-yes.svg";
-import Header from "./Header";
-import Footer from "./Footer.js";
-import Main from "./Main.js";
-import PopupWithForm from "./PopupWithForm.js";
-import ImagePopup from "./ImagePopup.js";
-import EditProfilePopup from "./EditProfilePopup.js";
-import EditAvatarPopup from "./EditAvatarPopup.js";
-import AddPlacePopup from "./AddPlacePopup.js";
-import { Route, Switch, Redirect, useHistory } from "react-router-dom";
-import Login from "./Login.js";
-import Register from "./Register.js";
-import InfoTooltip from "./InfoTooltip.js";
-import ProtectedRoute from "./ProtectedRoute.js";
-import * as auth from "../utils/auth.js";
+import React from 'react';
+import api from '../utils/api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import registrationWrong from '../images/Union-not.svg';
+import registrationOk from '../images/Union-yes.svg';
+import Header from './Header';
+import Footer from './Footer';
+import Main from './Main';
+import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import Login from './Login';
+import Register from './Register';
+import InfoTooltip from './InfoTooltip';
+import ProtectedRoute from './ProtectedRoute';
+import * as auth from '../utils/auth';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -33,9 +33,9 @@ function App() {
 
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [email, setEmail] = React.useState("");
+  const [email, setEmail] = React.useState('');
   const history = useHistory();
-  const [message, setMessage] = React.useState({ iconPath: "", text: "" });
+  const [message, setMessage] = React.useState({ iconPath: '', text: '' });
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -78,14 +78,14 @@ function App() {
   }
 
   React.useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
+    const jwt = localStorage.getItem('jwt');
     if (jwt) {
       auth
         .getContent(jwt)
         .then((res) => {
           setLoggedIn(true);
           setEmail(res.data.email);
-          history.pushState("/");
+          history.push('/');
         })
         .catch((err) => {
           console.log(err);
@@ -157,9 +157,9 @@ function App() {
 
   function handleSignOut() {
     setLoggedIn(false);
-    localStorage.removeItem("jwt");
-    setEmail("");
-    history.push("/sign-in");
+    localStorage.removeItem('jwt');
+    setEmail('');
+    history.push('/sign-in');
   }
 
   function registration({ email, password }) {
@@ -169,16 +169,16 @@ function App() {
         if (res.status === 201) {
           handleInfoTooltipContent({
             iconPath: registrationOk,
-            text: "Вы успешно зарегистрировались!",
+            text: 'Вы успешно зарегистрировались!',
           });
           handleInfoTooltipOpen();
-          setTimeout(history.push, 3000, "/sign-in");
+          setTimeout(history.push, 3000, '/sign-in');
           setTimeout(closeAllPopups, 2500);
         }
         if (res.status === 400) {
           handleInfoTooltipContent({
             iconPath: registrationWrong,
-            text: "Введенный email уже зарегистрирован!",
+            text: 'Введенный email уже зарегистрирован!',
           });
           handleInfoTooltipOpen();
           setTimeout(closeAllPopups, 2500);
@@ -187,7 +187,7 @@ function App() {
       .catch((err) => {
         handleInfoTooltipContent({
           iconPath: registrationWrong,
-          text: "Что-то пошло не так! Попробуйте еще раз!",
+          text: 'Что-то пошло не так! Попробуйте еще раз!',
         });
         handleInfoTooltipOpen();
         setTimeout(closeAllPopups, 2500);
@@ -197,24 +197,24 @@ function App() {
 
   function authorization({ email, password }) {
     auth
-      .authorize({ email, password })
+      .authorize({email, password})
       .then((data) => {
         if (!data) {
-          throw new Error("Произошла ошибка");
+          throw new Error('Некорректно заполнено одно из полей');
         }
         setLoggedIn(true);
         handleInfoTooltipContent({
           iconPath: registrationOk,
-          text: "Вы успешно авторизованы!",
+          text: 'Вы успешно авторизованы!',
         });
         handleInfoTooltipOpen();
-        setTimeout(history.push, 3000, "/");
+        setTimeout(history.push, 3000, '/');
         setTimeout(closeAllPopups, 2500);
       })
       .catch((err) => {
         handleInfoTooltipContent({
           iconPath: registrationWrong,
-          text: "Что-то пошло не так! Попробуйте еще раз!",
+          text: 'Что-то пошло не так! Попробуйте еще раз!',
         });
         handleInfoTooltipOpen();
         setTimeout(closeAllPopups, 2500);
@@ -230,15 +230,15 @@ function App() {
     setIsTooltipOpen(false);
     setSelectedCard({
       isOpen: false,
-      link: "",
-      name: "",
+      link: '',
+      name: '',
     });
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
-        <div className="page__container">
+      <div className='page'>
+        <div className='page__container'>
           <Header
             loggedIn={loggedIn}
             email={email}
@@ -246,15 +246,15 @@ function App() {
           />
 
           <Switch>
-            <Route path="/sign-in">
+            <Route path='/sign-in'>
               <Login authorization={authorization} />
             </Route>
-            <Route path="/sign-up">
+            <Route path='/sign-up'>
               <Register registration={registration} />
             </Route>
             <ProtectedRoute
               exact
-              path="/"
+              path='/'
               component={Main}
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
@@ -266,8 +266,8 @@ function App() {
               loggedIn={loggedIn}
             ></ProtectedRoute>
 
-            <Route path="/">
-              {loggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-in" />}
+            <Route path='/'>
+              {loggedIn ? <Redirect to='/main' /> : <Redirect to='/sign-in' />}
             </Route>
           </Switch>
           <Footer />
@@ -297,9 +297,9 @@ function App() {
           />
 
           <PopupWithForm
-            title="Вы уверены?"
-            name="popup-delete-img"
-            buttonText="Да"
+            title='Вы уверены?'
+            name='popup-delete-img'
+            buttonText='Да'
             onClose={closeAllPopups}
           ></PopupWithForm>
           <ImagePopup
