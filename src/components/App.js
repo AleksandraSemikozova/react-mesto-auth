@@ -164,20 +164,20 @@ function App() {
 
   function handleSetEmail(jwt) {
     auth
-    .getContent(jwt)
-    .then((res) => {
-      setEmail(res.data.email);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  } 
+      .getContent(jwt)
+      .then((res) => {
+        setEmail(res.data.email);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function registration({ email, password }) {
     auth
       .register(email, password)
       .then((res) => {
-        if (res.status === 201) {
+        if (res) {
           handleInfoTooltipContent({
             iconPath: registrationOk,
             text: 'Вы успешно зарегистрировались!',
@@ -186,19 +186,11 @@ function App() {
           setTimeout(history.push, 3000, '/sign-in');
           setTimeout(closeAllPopups, 2500);
         }
-        if (res.status === 400) {
-          handleInfoTooltipContent({
-            iconPath: registrationError,
-            text: 'Некорректно заполнено одно из полей',
-          });
-          handleInfoTooltipOpen();
-          setTimeout(closeAllPopups, 2500);
-        }
       })
       .catch((err) => {
         handleInfoTooltipContent({
           iconPath: registrationError,
-          text: 'Что-то пошло не так! Попробуйте еще раз!',
+          text: 'Некорректно заполнено одно из полей',
         });
         handleInfoTooltipOpen();
         setTimeout(closeAllPopups, 2500);
@@ -208,13 +200,13 @@ function App() {
 
   function authorization({ email, password }) {
     auth
-      .authorize({email, password})
+      .authorize({ email, password })
       .then((data) => {
         if (!data) {
           throw new Error('Ошибка');
         }
         setLoggedIn(true);
-        handleSetEmail(data)
+        handleSetEmail(data);
         handleInfoTooltipContent({
           iconPath: registrationOk,
           text: 'Вы успешно авторизованы!',
@@ -245,8 +237,8 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className='page'>
-        <div className='page__container'>
+      <div className="page">
+        <div className="page__container">
           <Header
             loggedIn={loggedIn}
             email={email}
@@ -255,15 +247,15 @@ function App() {
           />
 
           <Switch>
-            <Route path='/sign-in'>
+            <Route path="/sign-in">
               <Login authorization={authorization} />
             </Route>
-            <Route path='/sign-up'>
+            <Route path="/sign-up">
               <Register registration={registration} />
             </Route>
             <ProtectedRoute
               exact
-              path='/'
+              path="/"
               component={Main}
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
@@ -275,8 +267,8 @@ function App() {
               loggedIn={loggedIn}
             ></ProtectedRoute>
 
-            <Route path='/'>
-              {loggedIn ? <Redirect to='/main' /> : <Redirect to='/sign-in' />}
+            <Route path="/">
+              {loggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-in" />}
             </Route>
           </Switch>
           <Footer />
@@ -306,9 +298,9 @@ function App() {
           />
 
           <PopupWithForm
-            title='Вы уверены?'
-            name='popup-delete-img'
-            buttonText='Да'
+            title="Вы уверены?"
+            name="popup-delete-img"
+            buttonText="Да"
             onClose={closeAllPopups}
           ></PopupWithForm>
           <ImagePopup
