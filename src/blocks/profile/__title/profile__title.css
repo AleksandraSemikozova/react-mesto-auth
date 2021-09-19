@@ -9,13 +9,21 @@
   overflow: hidden;
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 750px) {
   .profile__title {
     max-width: 258px;
     font-size: 36px;
     margin: 0 0 14px;
   }
 }
+
+/* @media screen and (max-width: 670px) {
+  .profile__title {
+    max-width: 258px;
+    font-size: 36px;
+    margin: 0 0 14px;
+  }
+} */
 
 @media screen and (max-width: 320px) {
   .profile__title {

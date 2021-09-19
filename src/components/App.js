@@ -162,6 +162,17 @@ function App() {
     history.push('/sign-in');
   }
 
+  function handleSetEmail(jwt) {
+    auth
+    .getContent(jwt)
+    .then((res) => {
+      setEmail(res.data.email);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  } 
+
   function registration({ email, password }) {
     auth
       .register(email, password)
@@ -203,6 +214,7 @@ function App() {
           throw new Error('Ошибка');
         }
         setLoggedIn(true);
+        handleSetEmail(data)
         handleInfoTooltipContent({
           iconPath: registrationOk,
           text: 'Вы успешно авторизованы!',
@@ -228,11 +240,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setImagePopupOpen(false);
     setIsTooltipOpen(false);
-    setSelectedCard({
-      isOpen: false,
-      link: '',
-      name: '',
-    });
+    setSelectedCard(false);
   }
 
   return (
@@ -243,6 +251,7 @@ function App() {
             loggedIn={loggedIn}
             email={email}
             handleSignOut={handleSignOut}
+            handleSetEmail={handleSetEmail}
           />
 
           <Switch>

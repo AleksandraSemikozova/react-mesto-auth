@@ -27,7 +27,6 @@ function Login({ authorization }) {
           action='#'
           name='popup-login'
           className='popup__form popup__form_dark-theme'
-          noValidate
           onSubmit={handleSubmit}
         >
           <h2 className='popup__title'>Вход</h2>
