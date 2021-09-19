@@ -8,18 +8,18 @@ function Header({ loggedIn, email, handleSignOut }) {
   const linkRoute = `${pathname === '/sign-in' ? '/sign-up' : '/sign-in'}`;
 
   return (
-    <header className='header'>
-      <img src={headerLogo} alt='Логотип' className='header__logo' />
-      <div className='header__wrap'>
+    <header className="header">
+      <img src={headerLogo} alt="Логотип" className="header__logo" />
+      <div className="header__wrap">
         {loggedIn ? (
           <>
-            <p className='header__email'>{email}</p>
-            <Link className='header__signout' to='' onClick={handleSignOut}>
+            <p className="header__email">{email}</p>
+            <Link className="header__signout" to="" onClick={handleSignOut}>
               Выйти
             </Link>
           </>
         ) : (
-          <Link className='header__link' to={linkRoute}>
+          <Link className="header__link" to={linkRoute}>
             {text}
           </Link>
         )}

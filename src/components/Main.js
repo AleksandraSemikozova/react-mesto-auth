@@ -17,40 +17,40 @@ function Main({
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
-    <main className='content'>
-      <section className='profile'>
-        <div className='profile__avatar-container'>
+    <main className="content">
+      <section className="profile">
+        <div className="profile__avatar-container">
           <img
-            className='profile__avatar'
+            className="profile__avatar"
             src={`${currentUser.avatar}`}
-            alt='Аватар профиля'
+            alt="Аватар профиля"
           />
-          <div onClick={onEditAvatar} className='profile__avatar-edit'></div>
+          <div onClick={onEditAvatar} className="profile__avatar-edit"></div>
         </div>
 
-        <div className='profile__info'>
-          <div className='profile__wrap'>
-            <h1 className='profile__title'>{currentUser.name}</h1>
+        <div className="profile__info">
+          <div className="profile__wrap">
+            <h1 className="profile__title">{currentUser.name}</h1>
             <button
               onClick={onEditProfile}
-              type='button'
-              aria-label='Редактировать профиль'
-              className='profile__edit-btn btn'
+              type="button"
+              aria-label="Редактировать профиль"
+              className="profile__edit-btn btn"
             ></button>
           </div>
 
-          <p className='profile__subtitle'>{currentUser.about} </p>
+          <p className="profile__subtitle">{currentUser.about} </p>
         </div>
         <button
           onClick={onAddPlace}
-          type='button'
-          aria-label='Добавить картинку'
-          className='profile__add-btn btn'
+          type="button"
+          aria-label="Добавить картинку"
+          className="profile__add-btn btn"
         ></button>
       </section>
 
       <section>
-        <ul className='elements'>
+        <ul className="elements">
           {cards.map((card) => (
             <Card
               key={card._id}
